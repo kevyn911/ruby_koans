@@ -1,0 +1,146 @@
+#======== Розбиття рядка на слова та внесенням їх в масив ==========#
+
+def test_array_split
+    empty_array = Array.new
+    full_name = "Ivanov Ivan"
+    empty_array << full_name.split(' ')
+    assert_equal [["Ivanov", "Ivan"]] , 
+  end
+
+#======== Приведення всіх літер рядка до верхнього регістру ============#
+
+def test_up_and_down_lettercase
+    low_text = "ruby koans"
+    up_text = low_text.upcase
+    assert_equal "RUBY KOANS", up_text
+  end
+
+#========= Приведення першої літери рядка до верхнього регістру ===========#
+
+def test_capitalize_the_string
+    text = "vitaliy, hello"
+    capitalize_text = text.capitalize
+    assert_equal capitalize_text, "Vitaliy, hello"
+  end
+
+#========= Заміна підстроки у рядку ========#
+
+  def test_gsub_string
+    text = "Koans is so hard"
+    gsub_sting = text.gsub("hard", "easy")
+    assert_equal "Koans is so easy", gsub_sting
+  end
+
+#========= Видалення елементу масиву на заданій позиції ==========#
+
+def test_delete_elements
+    arr = ["Ruby", "not" , "a" , "good", "language"]
+    arr.delete_at(1)
+    assert_equal ["Ruby", "a" , "good", "language"], arr
+  end
+
+#========= Типи заокруглення чисел в Ruby 2.4.0 ==========#
+
+def test_round_of_nums
+    a = 4.5
+    a.to_f
+    assert_equal a.round(half: :up), 5
+    assert_equal a.round(half: :down), 4
+    assert_equal a.round(half: :even), 4
+  end
+
+#========= Зміна значень хеша кожного ключа =========#
+
+def test_hash_transform_values
+    h = {a: 1, b: 2, c: 3}
+    h = h.transform_values { |v| v * 10 }
+    assert_equal h[:a] , 10
+  end
+
+#========= Виклик зразу всіх методів класу, шляхом додавання їх до масиву ==========#
+
+class Dog8
+    attr_reader :name
+
+    def initialize(initial_name)
+      @name = initial_name
+    end
+
+    def lolka
+      @name = "Soba"
+    end
+
+    def lol
+      @name += "4ka"
+    end
+
+
+  end
+
+  def test_arr_methods
+    fido = Dog8.new("Fido")
+    arr = [fido.method(:lolka), fido.method(:lol)]
+    arr.each {|m| m.call }
+    assert_equal fido.name , "Soba4ka"
+
+  end
+
+#========== Реверс рядка =========#
+
+def test_reverse_string
+      s = "hello"
+      b = s.reverse
+      assert_equal "hello", s
+      assert_equal "olleh", b
+  end
+
+#========== Перевірка на просте число ============#
+
+def prost?(a)
+    i=2
+    b=true
+    while i<a
+      if a%i==0
+        b=false
+      end
+      i=i+1
+    end
+    b
+  end
+
+  def test_prost
+    assert_equal true,prost?(7)
+    assert_equal false,prost?(16)
+  end
+
+#========== Отримання першого та останнього слів заданого рядка ========#
+
+def first_and_end_word s
+    a=s.split
+    b=[a[0],a[a.length-1]]
+    b.join(", ")
+  end
+
+  def test_first_end
+    assert_equal "aaa, ccc",first_and_end_word("aaa bbb ccc")
+    assert_equal "ddt, tyut",first_and_end_word("ddt hfhgh, 76858 jhfjj? tyut")
+  end
+
+#========== Метод з багатьма параметрами ===========#
+
+def sample (*test)
+   $test1 = "The number of parameters is #{test.length}"
+   $test2 = "The parameters are"
+   for i in 0...test.length
+      $test2 += " #{test[i]}"
+   end
+  end
+
+  def test_method_with_diff_params
+    sample "Text1", "Text2", "Text3"
+    sample "Mac", "36", "M", "MCA"
+    assert_equal "The number of parameters is 4" , $test1
+    assert_equal "The parameters are Mac 36 M MCA" , $test2
+  end
+
+
